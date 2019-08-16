@@ -27,9 +27,8 @@ class UserController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
-
         $user = User::where('email', $request->email)->first();
-
+        
         if ($user) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 // Authentication passed...
@@ -44,6 +43,7 @@ class UserController extends Controller
                 $scope = $request->user()->role;
                 // dd($scope);
                 $tokenResult = $auth_user->createToken('Personal Access Token', [$scope]);
+                // dd('xxx');
                 $token = $tokenResult->token;
                 $token->save();
 
