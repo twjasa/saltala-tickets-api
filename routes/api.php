@@ -31,7 +31,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
     ///ADMIN ROUTES
     Route::group(['middleware' => 'scope:admin'], function () {
-        Route::delete('/delete/{ticket_id}', 'TicketController@destroy');
-        Route::get('get-all-tickets', 'TicketController@index');
+        Route::delete('delete/{ticket_id}', 'TicketController@destroy');
+        Route::get('get-all-tickets', 'TicketController@allTickets');
+        Route::post('update-ticket/{ticket_id}', 'TicketController@update');
     });
 });
