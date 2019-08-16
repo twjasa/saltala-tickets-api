@@ -23,14 +23,15 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::prefix('ticket')->group(function () {
         Route::post('/update/{ticket_id}', 'TicketController@update');
     });
+    //USER ROUTES
     Route::get('user/logout', 'UserController@logout');
-});
-
-Route::group(['middleware'=>'scope:user'], function() {
-    Route::post('/new', 'TicketController@store');
-});
-
-Route::group(['middleware' => 'scope:admin'], function () {
-    Route::delete('/delete/{ticket_id}', 'TicketController@destroy');
-    Route::get('get-all-tickets', 'TicketController@index');
+    Route::group(['middleware'=>'scope:user'], function() {
+        Route::post('/new-ticket/{user_id}', 'TicketController@newTicket');
+        Route::get('/get-user-tickets/{user_id}', 'TicketController@getUserTickets');
+    });
+    ///ADMIN ROUTES
+    Route::group(['middleware' => 'scope:admin'], function () {
+        Route::delete('/delete/{ticket_id}', 'TicketController@destroy');
+        Route::get('get-all-tickets', 'TicketController@index');
+    });
 });
